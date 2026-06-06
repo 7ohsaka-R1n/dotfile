@@ -22,9 +22,32 @@ config.max_fps = 120
 config.window_close_confirmation = 'NeverPrompt'
 
 
-config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
+config.font = wezterm.font_with_fallback({
+    { family = "JetBrainsMono Nerd Font Mono", weight = "Regular" },
+    { family = "MesloLGS NF" },
+})
 
 config.color_scheme = "Catppuccin Mocha"
+
+-- Tab bar & window frame colors (Catppuccin Mocha)
+config.window_frame = {
+    active_titlebar_bg   = "#1e1e2e",
+    inactive_titlebar_bg = "#1e1e2e",
+    button_fg            = "#cdd6f4",
+    button_bg            = "#1e1e2e",
+    button_hover_fg      = "#11111b",
+    button_hover_bg      = "#cba6f7",
+}
+config.colors = {
+    tab_bar = {
+        background        = "#11111b",
+        active_tab        = { bg_color = "#cba6f7", fg_color = "#11111b" },
+        inactive_tab      = { bg_color = "#1e1e2e", fg_color = "#cdd6f4" },
+        inactive_tab_hover= { bg_color = "#313244", fg_color = "#cdd6f4" },
+        new_tab           = { bg_color = "#1e1e2e", fg_color = "#cdd6f4" },
+        new_tab_hover     = { bg_color = "#45475a", fg_color = "#cdd6f4" },
+    },
+}
 
 -- 透明背景
 config.window_background_opacity = 0.9
