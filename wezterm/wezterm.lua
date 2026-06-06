@@ -55,7 +55,9 @@ config.adjust_window_size_when_changing_font_size = true
 
 local act = wezterm.action
 config.keys = {
-    { key = "v",      mods = "CTRL",       action = act { PasteFrom = "Clipboard" } },
+    -- 透传 Ctrl+V/T 给终端内程序（Neovim 需要这两个键），粘贴请用 Ctrl+Shift+V 或 Shift+Insert
+    { key = 'v',      mods = 'CTRL',       action = act.SendKey { key = 'v', mods = 'CTRL' } },
+    { key = 't',      mods = 'CTRL',       action = act.SendKey { key = 't', mods = 'CTRL' } },
     -- Ctrl+Shift+Tab 遍历 tab
     { key = 'Tab',       mods = 'SHIFT|CTRL', action = act.ActivateTabRelative(1) },
     -- F11 切换全屏
