@@ -204,6 +204,10 @@ if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
 
+# nvm (default alias -> node 22, needed by copilot.lua & node-based LSPs)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 # pyenv
 # https://github.com/pyenv/pyenv#installation
 if command -v pyenv > /dev/null 2>&1; then

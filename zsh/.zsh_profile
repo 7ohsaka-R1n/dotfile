@@ -20,8 +20,17 @@ else
 fi
 # export LANG=en_US.UTF-8
 # fzf
-# use github install fzf, and add fzf to zsh.
-source <(fzf --zsh)
+# `fzf --zsh` needs fzf >= 0.48.0. Older builds (e.g. Debian's 0.44.x) lack it,
+# so fall back to the integration scripts shipped by the distro package.
+if fzf --zsh >/dev/null 2>&1; then
+    source <(fzf --zsh)
+else
+    for _d in /usr/share/doc/fzf/examples /usr/share/fzf; do
+        [ -f "$_d/key-bindings.zsh" ] && source "$_d/key-bindings.zsh"
+        [ -f "$_d/completion.zsh" ] && source "$_d/completion.zsh"
+    done
+    unset _d
+fi
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 ############### alias #################

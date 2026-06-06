@@ -24,10 +24,7 @@ config.window_close_confirmation = 'NeverPrompt'
 
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
 
--- config.color_scheme = "GruvboxDark"
-local materia = wezterm.color.get_builtin_schemes()['GruvboxDark']
-materia.scrollbar_thumb = '#818020' -- 滚动条颜色
-config.colors = materia
+config.color_scheme = "Catppuccin Mocha"
 
 -- 透明背景
 config.window_background_opacity = 0.9
@@ -89,8 +86,12 @@ config.keys = {
     { key = "Insert", mods = "SHIFT",      action = act { PasteFrom = "Clipboard" } },
     { key = "Insert", mods = "CTRL",       action = act { PasteFrom = "PrimarySelection" } },
     { key = "Insert", mods = "CTRL|SHIFT", action = act { PasteFrom = "PrimarySelection" } },
-    { key = '+',      mods = 'SHIFT|ALT',  action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-    { key = '_',      mods = 'SHIFT|ALT',  action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+    -- 分屏改用 Ctrl+Shift,避开与 tmux 的 Alt+Shift+-/+(M-_/M-+)冲突。
+    -- 注意:Alt+Shift 那两个键留给 tmux,wezterm 不再占用。
+    -- Ctrl+Shift+\ 左右分屏(竖分隔线 |)
+    { key = '\\',     mods = 'SHIFT|CTRL',  action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+    -- Ctrl+Shift+' 上下分屏
+    { key = "'",      mods = 'SHIFT|CTRL',  action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
     { key = 'N', mods = 'SHIFT|CTRL', action = act.SpawnWindow },
 
     -- search for things that look like git hashes
